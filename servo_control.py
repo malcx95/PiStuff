@@ -13,26 +13,23 @@ class Servo:
         GPIO.setup(port, GPIO.OUT)
         self.pwm = GPIO.PWM(port, 50)
 
-    def getPort(self):
-        return self.port
-
-    def moveLeft(self):
-        dCP = Servo.getDCP(Servo.LEFT)
+    def move_left(self):
+        dCP = Servo.get_dcp(Servo.LEFT)
         self.pwm.start(dCP)
 
-    def moveRight(self):
-        dCP = Servo.getDCP(Servo.RIGHT)
+    def move_right(self):
+        dCP = Servo.get_dcp(Servo.RIGHT)
         self.pwm.start(dCP)
 
-    def setPosition(self, angle):
+    def set_position(self, angle):
         if angle < 0 or angle > 180:
             raise Exception("Angle must be between 0 and 180 degrees!")
         r = Servo.RIGHT - Servo.LEFT
         pos = r * (angle/180) + Servo.LEFT
-        dCP = Servo.getDCP(pos)
+        dCP = Servo.get_dcp(pos)
         self.pwm.start(dCP)
     
-    def getDCP(pos):
+    def get_dcp(pos):
         return pos * 100 / Servo.MS_PER_CYCLE
 
     def stop(self):
